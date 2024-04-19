@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kald-IntsiHaldur")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a79a266ba89a76e5b4331a6d97197a16195fdaa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+349c9333931ba72fa6f664e9f88e0110f4829f38")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kald-IntsiHaldur")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kald-IntsiHaldur")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
