@@ -1,0 +1,63 @@
+﻿
+
+<!-- Vorm Modaaldialoogiaknas, kasutame seda pöördumise lisamiseks -->
+<div class="modal fade" id="newIncident" tabindex="-1" aria-labelledby="addIncidentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIncidentModalLabel">Pöördumise loomine</h5>
+                <button type="button" class="btn-close" data-bs-toggle="tooltip" title="Sulge" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-area="" asp-action="Create" method="post">
+                <div class="modal-body">
+                    <p>Palun täitke järgnevad väljad:</p>
+                    <div class="form-group">
+                        <label for="descriptionField" class="col-form-label"><b>Kirjeldus:</b></label>
+                        <input type="Text" id="DescriptionField" name="descriptionfield" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="datetimepick" class="col-form-label"><b>Tähtaeg:</b></label>
+                        <input type="datetime-local" format-value="dd-MM-yyyyTHH:mm" name="datetimepick" id="datetimepick" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sulge</button>
+                    <button type="submit" value="Create" class="btn btn-primary">Lisa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+}
+
+
+@* @{
+    ViewData["Title"] = "Create";
+} *@
+
+
+@* <div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTimeDeadline" class="control-label"></label>
+                <input asp-for="DateTimeDeadline" type="datetime-local" format-value="dd-MM-yyyyTHH:mm" id="datetimepick" class="form-control" />
+                <span asp-validation-for="DateTimeDeadline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div> *@
