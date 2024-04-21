@@ -6,7 +6,6 @@
 
 <div class="text-center">
     <h1 class="display-4">Pöördumised</h1>
-
 <table class="table">
     <thead>
         <tr>
@@ -37,9 +36,68 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <p>@item.Id.ToString()</p>
+                <!--Link, mis avab modaalvormi markDoneModal ja saadab modaalvormile JS-koodiga ID Guid vormingus -->
+                <a href="#" data-bs-target="#markDoneModal" data-bs-toggle="modal" class="incidentidentifier" data-bs-id='@item.Id'>Märgi tehtuks</a>
+
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
+
+@*
+    // $(function () {
+    //     $(".incidentidentifier").click(function () {
+    //         var incId = $(this).data('bs-id');
+    //         window.alert("ID:" + incId);
+    //         $(".modal-body #incidentID").val(incId);
+    //         $(".modal-body #test").val(incId);
+    //     })
+    // });
+*@
+
+@* <!--Modaaldialoog, kus küsime kasutajalt kinnitust märkida pöördumine tehtuks ja eemaldada see andmebaasist-->
+<div class="modal fade" id="markDoneModal" tabindex="-1" aria-labelledby="markDoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="markDoneModalLabel">Oled kindel, et soovid pöördumist lahendatuks märkida? </h5>
+                <button type="button" class="btn-close" data-bs-toggle="tooltip" title="Sulge" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-area="" asp-action="MarkDone" method="post">
+                <div class="modal-body">
+                    <p>Märkides pöördumise lahendatuks, eemaldatakse see nimekirjas. Jätkamiseks klõpsake Kinnita või klõpsake Katkesta, kui muutsite meelt.</p>
+                    <input type="text" name="incidentID" value='' />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Katkesta</button>
+                    <button type="button" value="MarkDone" class="btn btn-danger mark_done_confirm">Kinnita</button>
+                </div>
+            </form>
+            <script>
+
+            </script>
+
+        </div>
+    </div>
+</div> *@
+@* <script>
+    // $(function () {
+    //     $(".incidentidentifier").click(function () {
+    //         var incId = $(this).data('id');
+    //         window.alert("ID:" + incId);
+    //         $(".modal-body #incidentID").val(incId);
+    //         $(".modal-body #test").val(incId);
+    //     })
+        //var incidlink = document.getElementById('incidentidentifier');
+        //var incidLinkDataID = incidlink.getAttribute('data-incident-id');
+        //window.alert(incidLinkDataID);
+        //var modalincidentID = document.getElementById('incidentID');
+        //modalincidentID.setAttribute('value', incidLinkDataID);
+
+    });
+</script> *@
+@await Html.PartialAsync("MarkDone") @* Šabloon pöördumise eemaldamiseks (avab modaaldialoogi)
+    @* *@

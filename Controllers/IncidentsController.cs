@@ -171,6 +171,25 @@ namespace Kald_IntsiHaldur.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        //POST päringu abil saame string formaadis ID, mida pärast teisendamist 
+        public async Task<IActionResult> MarkDone(Guid incidentID)
+        {
+            //Guid id = Guid.Parse(incidentID);
+            Console.WriteLine("ID:" + incidentID.ToString());
+            //Otsime andmebaasist õige pöördumise, mille ID vastaks incidentID-le
+            var incident = await _context.Incident.FindAsync(incidentID);
+            if (incident != null)
+            {
+                _context.Incident.Remove(incident); //Eemaldame pöördumise
+            }
+
+            await _context.SaveChangesAsync(); //Salvestame andmebaasi
+            return RedirectToAction(nameof(Index)); //Naaseme index lehele
+        }
+
         private bool IncidentExists(Guid id)
         {
             return _context.Incident.Any(e => e.Id == id);

@@ -33,7 +33,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-var ci = new CultureInfo("sv-SE");
+var ci = new CultureInfo("et-EE"); //
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
     DefaultRequestCulture = new RequestCulture(ci),
