@@ -10,10 +10,12 @@
     <script src="~/js/site.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </head>
+@await Html.PartialAsync("Create") @* Teeme pöördumismodaali šablooni kättesaadavaks Layout failis*@
+@await Html.PartialAsync("MarkDone") @* Šabloon pöördumise eemaldamiseks (avab modaaldialoogi)*@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-red border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:whitesmoke">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Incidents" asp-action="Index">IntsiHaldur</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -33,7 +35,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -49,7 +51,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-    @await Html.PartialAsync("Create") @* Teeme pöördumismodaali šablooni kättesaadavaks Layout failis*@
 
 </body>
 </html>

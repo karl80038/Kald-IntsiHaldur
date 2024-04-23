@@ -8,8 +8,14 @@
 $('#markDoneModal').on('show.bs.modal', function (event) {
     var link = $(event.relatedTarget); // Leiame lingi, mis modaalakna lahti tegi
     var incid = link.data('bs-id'); //Loeme GUID väärtuse just sellelt lingilt, millega selle modaalakna avasine
+    var incdesc = link.data('bs-description');
+    var inccreated = link.data('bs-datetimecreated');
+    var incdeadline = link.data('bs-deadline');
     var modal = $(this);
-    modal.find('.modal-body input').val(incid); //Saadame GUID väärtuse modaalakna input hidden elementi
+    modal.find('.modal-body .row .col-sm-10 #incidentID').val(incid); //Saadame GUID väärtuse modaalakna input hidden elementi
+    modal.find('.modal-body .row .col-sm-10 #description').html(incdesc);
+    modal.find('.modal-body .row .col-sm-10 #dateTimeAdded').html(inccreated);
+    modal.find('.modal-body .row .col-sm-10 #deadline').html(incdeadline);
 });
 
 //Bootstrap tooltip initsialiseerimiskood

@@ -1,103 +1,114 @@
 ﻿@model IEnumerable<Kald_IntsiHaldur.Models.Incident>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pöördumised";
 }
 
 <div class="text-center">
     <h1 class="display-4">Pöördumised</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeDeadline)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeDeadline)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <p>@item.Id.ToString()</p>
-                <!--Link, mis avab modaalvormi markDoneModal ja saadab modaalvormile JS-koodiga ID Guid vormingus -->
-                <a href="#" data-bs-target="#markDoneModal" data-bs-toggle="modal" class="incidentidentifier" data-bs-id='@item.Id'>Märgi tehtuks</a>
+    @if (Model.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateTimeCreated)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateTimeDeadline)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateTimeCreated)
+                        </td>
+                        <td>
+                            @*Oleme trükkimas tähtaega massiivist, aga enne peame otsustama, kas värvida tekst tähtajaga mustaks või punaseks*@
+                            @*Kui tähtaeg on möödas, värvime teksti punaseks. Samuti värvime ta punaseks sel juhul, kui tähtaeg kukkub vähem kui tunni aja pärast*@
+                            @*Muudel juhtudel kuvatakse tähtaeg mustas värvis*@
+                            @{
+                                DateTime now = DateTime.Now;
+                                bool colorDeadLineRed = false; //Määrame muutuja vaikeväärtuseks 'väär'
+                            }
 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                            @if (now.Year > item.DateTimeDeadline.Year) //Tähtaeg kukkus eelnevate aastate jooksul, seega värvime ta punaseks
+                            {
+                                colorDeadLineRed = true;
+                            }
+                            @if (now.Year < item.DateTimeDeadline.Year) //Tähtaeg kukub alles järgmisel aastal või hiljem
+                            {
+                                colorDeadLineRed = false;
+                            }
+                            @if (now.Year == item.DateTimeDeadline.Year)//Tähtaeg langeb praegusele aastale, vaja täiendavalt võrrelda kuid ja päevi
+                            {
+                                if (now.Month > item.DateTimeDeadline.Month)
+                                {
+                                    colorDeadLineRed = true;
+                                }
+
+                                if (now.Month < item.DateTimeDeadline.Month)
+                                {
+                                    colorDeadLineRed = false;
+                                }
+                                if (now.Month == item.DateTimeDeadline.Month)
+                                {
+                                    if (now.Day > item.DateTimeDeadline.Day)
+                                    {
+                                        colorDeadLineRed = true;
+                                    }
+                                    if (now.Day < item.DateTimeDeadline.Day)
+                                    {
+                                        colorDeadLineRed = false;
+                                    }
+                                    if (now.Day == item.DateTimeDeadline.Day)
+                                    {
+                                        colorDeadLineRed = (item.DateTimeDeadline - now).TotalMinutes <= 59; //Kui vähem kui tund aega on tähtajani jäänud, värvime tähtaja punaseks
+                                    }
+                                }
+                            }
+                            @*Hakkame värvima! Vaatame tingimuselausega, kas värvida antud pöördumise tähtaeg punaseks või mustaks*@
+                            @if (colorDeadLineRed) //colorDeadLineRed lause on tõene, värvime teksti punaseks
+                            {
+                                <span style="color:red">@Html.DisplayFor(modelItem => item.DateTimeDeadline)</span>
+
+                            }
+                            else
+                            {
+                                <span style="color:black">@Html.DisplayFor(modelItem => item.DateTimeDeadline)</span>
+                            }
+                        </td>
+                        <td>
+                            <!--Link, mis avab modaalvormi markDoneModal ja saadab modaalvormile JS-koodi abil ID Guid vormingus -->
+                            <a href="#" data-bs-target="#markDoneModal" data-bs-toggle="modal" class="incidentidentifier" data-bs-id='@item.Id' 
+                            data-bs-description='@item.Description' data-bs-datetimecreated="@item.DateTimeCreated" data-bs-deadline="@item.DateTimeDeadline">Märgi tehtuks</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="blue" class="bi bi-info-circle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Info:">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+            </svg>
+            <div>
+                Hetkel pole ühtegi pöördumist
+            </div>
+        </div>
+    }
 </div>
 
-@*
-    // $(function () {
-    //     $(".incidentidentifier").click(function () {
-    //         var incId = $(this).data('bs-id');
-    //         window.alert("ID:" + incId);
-    //         $(".modal-body #incidentID").val(incId);
-    //         $(".modal-body #test").val(incId);
-    //     })
-    // });
-*@
-
-@* <!--Modaaldialoog, kus küsime kasutajalt kinnitust märkida pöördumine tehtuks ja eemaldada see andmebaasist-->
-<div class="modal fade" id="markDoneModal" tabindex="-1" aria-labelledby="markDoneModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="markDoneModalLabel">Oled kindel, et soovid pöördumist lahendatuks märkida? </h5>
-                <button type="button" class="btn-close" data-bs-toggle="tooltip" title="Sulge" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form asp-area="" asp-action="MarkDone" method="post">
-                <div class="modal-body">
-                    <p>Märkides pöördumise lahendatuks, eemaldatakse see nimekirjas. Jätkamiseks klõpsake Kinnita või klõpsake Katkesta, kui muutsite meelt.</p>
-                    <input type="text" name="incidentID" value='' />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Katkesta</button>
-                    <button type="button" value="MarkDone" class="btn btn-danger mark_done_confirm">Kinnita</button>
-                </div>
-            </form>
-            <script>
-
-            </script>
-
-        </div>
-    </div>
-</div> *@
-@* <script>
-    // $(function () {
-    //     $(".incidentidentifier").click(function () {
-    //         var incId = $(this).data('id');
-    //         window.alert("ID:" + incId);
-    //         $(".modal-body #incidentID").val(incId);
-    //         $(".modal-body #test").val(incId);
-    //     })
-        //var incidlink = document.getElementById('incidentidentifier');
-        //var incidLinkDataID = incidlink.getAttribute('data-incident-id');
-        //window.alert(incidLinkDataID);
-        //var modalincidentID = document.getElementById('incidentID');
-        //modalincidentID.setAttribute('value', incidLinkDataID);
-
-    });
-</script> *@
-@await Html.PartialAsync("MarkDone") @* Šabloon pöördumise eemaldamiseks (avab modaaldialoogi)
-    @* *@
