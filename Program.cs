@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Kald_IntsiHaldurContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Kald_IntsiHaldurContext") ?? throw new InvalidOperationException("Connection string 'Kald_IntsiHaldurContext' not found.")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("Kald_IntsiHaldurContext") ?? throw new InvalidOperationException("Connection string 'Kald_IntsiHaldurContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
