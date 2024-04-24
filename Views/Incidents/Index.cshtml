@@ -92,7 +92,6 @@
                             <!--Link, mis avab modaalvormi markDoneModal ja saadab modaalvormile JS-koodi abil ID Guid vormingus -->
                             <a href="#" data-bs-target="#markDoneModal" data-bs-toggle="modal" class="incidentidentifier" data-bs-id='@item.Id' 
                             data-bs-description='@item.Description' data-bs-datetimecreated="@item.DateTimeCreated" data-bs-deadline="@item.DateTimeDeadline">Märgi tehtuks</a>
-
                         </td>
                     </tr>
                 }
@@ -111,4 +110,5 @@
         </div>
     }
 </div>
+@await Html.PartialAsync("MarkDone") @* Šabloon pöördumise eemaldamiseks (avab modaaldialoogi)*@
 

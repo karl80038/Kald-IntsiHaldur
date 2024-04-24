@@ -16,7 +16,6 @@ namespace Kald_IntsiHaldur.Models
                 {
                     return;
                 }
-                context.Incident.Add(new Incident {Id= Guid.NewGuid(), Description = "Test", DateTimeDeadline = new DateTime(2024, 5, 1, 22, 00, 00) });
                 context.SaveChanges();
             }
         }

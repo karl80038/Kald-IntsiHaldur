@@ -12,7 +12,7 @@ $('#markDoneModal').on('show.bs.modal', function (event) {
     var inccreated = link.data('bs-datetimecreated');
     var incdeadline = link.data('bs-deadline');
     var modal = $(this);
-    modal.find('.modal-body .row .col-sm-10 #incidentID').val(incid); //Saadame GUID väärtuse modaalakna input hidden elementi
+    modal.find('.modal-body #incidentID').val(incid); //Saadame GUID väärtuse modaalakna input hidden elementi
     modal.find('.modal-body .row .col-sm-10 #description').html(incdesc);
     modal.find('.modal-body .row .col-sm-10 #dateTimeAdded').html(inccreated);
     modal.find('.modal-body .row .col-sm-10 #deadline').html(incdeadline);

@@ -57,7 +57,7 @@ namespace Kald_IntsiHaldur.Controllers
         //POST päringu abil saame Guid formaadis ID, mida pärast teisendamist 
         public async Task<IActionResult> MarkDone(Guid incidentID)
         {
-            Console.WriteLine("ID:" + incidentID.ToString());
+            Console.WriteLine("ID:", incidentID.ToString());
             //Otsime andmebaasist õige pöördumise, mille ID vastaks incidentID-le
             var incident = await _context.Incident.FindAsync(incidentID);
             if (incident != null)
