@@ -15,10 +15,10 @@ namespace Kald_IntsiHaldur.Migrations
                 name: "Incident",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateTimeCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateTimeDeadline = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    DateTimeCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateTimeDeadline = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
