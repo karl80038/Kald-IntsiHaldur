@@ -16,6 +16,8 @@ namespace Kald_IntsiHaldur.Models
                 {
                     return;
                 }
+                //Ära lisa uut kirjet tühja andmebaasi korral.
+                //context.Incident.Add(new Incident {Id= Guid.NewGuid(), Description = "Testkirje", DateTimeCreated = DateTime.Now, DateTimeDeadline = new DateTime(2024, 5, 1, 22, 00, 00) });
                 context.SaveChanges();
             }
         }
